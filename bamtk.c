@@ -8,8 +8,10 @@
 #include "knetfile.h"
 #endif
 
+#define _USE_EXTRA 1
+
 #ifndef PACKAGE_VERSION
-#define PACKAGE_VERSION "0.1.8-18 (r763)"
+#define PACKAGE_VERSION "0.1.8-18_custo (r1)"
 #endif
 
 int bam_taf2baf(int argc, char *argv[]);
@@ -27,6 +29,10 @@ int bam_idxstats(int argc, char *argv[]);
 int main_samview(int argc, char *argv[]);
 int main_import(int argc, char *argv[]);
 int main_reheader(int argc, char *argv[]);
+
+#ifdef _USE_EXTRA
+int main_qa(int argc, char* argv[]);
+#endif
 
 int faidx_main(int argc, char *argv[]);
 int glf3_view_main(int argc, char *argv[]);
@@ -94,6 +100,9 @@ static int usage()
 	fprintf(stderr, "         merge       merge sorted alignments\n");
 	fprintf(stderr, "         rmdup       remove PCR duplicates\n");
 	fprintf(stderr, "         reheader    replace BAM header\n");
+#ifdef _USE_EXTRA
+	fprintf(stderr, "         qa          quality control\n");
+#endif
 	fprintf(stderr, "\n");
 	return 1;
 }
@@ -127,6 +136,9 @@ int main(int argc, char *argv[])
 	else if (strcmp(argv[1], "reheader") == 0) return main_reheader(argc-1, argv+1);
 #if _CURSES_LIB != 0
 	else if (strcmp(argv[1], "tview") == 0) return bam_tview_main(argc-1, argv+1);
+#endif
+#ifdef _USE_EXTRA
+	else if (strcmp(argv[1], "qa") == 0) return main_qa(argc-1, argv+1);
 #endif
 	else {
 		fprintf(stderr, "[main] unrecognized command '%s'\n", argv[1]);
