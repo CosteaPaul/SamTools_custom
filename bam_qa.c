@@ -1,15 +1,6 @@
 #include <stdio.h>
 #include "sam.h"
 
-/*#define TOTAL_GENOME_LENGTH 0
-#define TOTAL_NUMBER_OF_READS 1
-#define NR_UNMAPPED_READS 2
-#define NR_ZERO_QUALITY_READS 3
-#define NR_PROPER_PAIRS 4
-
-int32_t computation_vector[5];*/
-
-
 /**
  * Check if read is properly mapped
  * @return true if read mapped, false otherwise
@@ -182,7 +173,10 @@ int main_qa(int argc, char *argv[])
     fprintf(outputFile,"Total number of reads: %d\n", totalNumberOfReads);
     fprintf(outputFile,"Procentage of unmapped reads: %3.2f\n", procentageOfUnmapped);
     fprintf(outputFile,"Procentage of zero quality mappings: %3.2f\n", procentageOfZeroQuality);
-    fprintf(outputFile,"Procentage of proper paired reads: %3.2f\n", (double)totalProperPaires/totalNumberOfReads);
+    int32_t nrOfPaires = totalNumberOfReads/2;
+    double procOfProperPaires = (double)(100*(double)totalProperPaires/2)/nrOfPaires;
+    fprintf(outputFile,"Number of proper paired reads: %d\n", totalProperPaires);
+    fprintf(outputFile,"Procentage of proper paires: %3.2f\n", procOfProperPaires);
 
     printf("Out of %d reads, you have %3.2f unmapped reads\n and %3.2f zero quality mappings", totalNumberOfReads ,procentageOfUnmapped, procentageOfZeroQuality);
     
