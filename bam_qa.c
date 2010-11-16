@@ -22,7 +22,7 @@ int main_qa(int argc, char *argv[])
   samfile_t *fp;
   FILE *outputFile;
   if (argc == 1) {
-    fprintf(stderr, "Usage: qaCompute <in.bam> <output.out>\n Note that the .bam file should be ordered");
+    fprintf(stderr, "Usage: qaCompute <in.bam> <output.out>\n Note that the .bam file should be ordered\n");
     return 1;
   }
   //Note that file is supposed to have been ordered beforehand!
@@ -123,7 +123,7 @@ int main_qa(int argc, char *argv[])
 	
 	//If read has quality == 0, we won't count it as mapped
 	if (core->qual != 0) {
-	  if (!core->flag&BAM_FMUNMAP) {
+	  if (core->flag&BAM_FPROPER_PAIR) {
 	    //Is part of a proper pair
 	    ++totalProperPaires;
 	  }
